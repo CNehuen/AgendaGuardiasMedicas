@@ -1,0 +1,65 @@
+{% extends "base_sistema.html" %}
+
+{% block content %}
+<section>   
+<aside> 
+  <select name="departamento">
+	<option>Elija Departamento...</option>
+      <option>Montevido</option>
+      <option>Colonia</option>
+      <option>Tacuarembó</option>
+      <option>Mercedes</option>  
+  </select>
+</aside>   
+</section> 
+  <section>
+    <table>
+      <caption>
+        <span class="title">DEVOLUCIÓN DE GUARDIAS</span><br><br><br>     
+        <span class="subtitle">En la siguiente tabla seleccione las guardias a devolver.</span><br><br>
+        <span class="stitle">SELECCIONE LA GUARDIA A DEVOLVER EN EL HORARIO DE LA COLUMNA TURNO.</span><br><br>    
+      </caption>
+      <thead>
+        <tr>
+          <th>
+            <span class="sstitle">INSTITUCION</span><br><br><label for="institucion"></label>
+            <select>
+              <option> Clinicas </option>
+              <option> Maciel </option>
+              <option> Colonia </option>
+              <option> Fray Bentos </option>
+              <option> Tacuarembó </option>
+            </select>
+          </th>
+          <th>
+            <span class="sstitle">FECHA</span><br><br><label for="fecha"></label>
+            <select name="fecha">
+              <option>2020-03-02</option>
+              <option>2020-03-03</option><br><br>
+              <option>2020-03-04</option>
+              <option>2020-03-05</option>
+              <option>2020-03-06</option>
+              <option>2020-03-07</option>
+              <option>2020-03-08</option>
+            </select>
+          </th>
+          <th>
+            {% load static %}
+            <span class="sstitle">ELIJA TURNO</span><br><br><label for="turno"></label> 
+            <img src="{% static "imagenes/flecha.png" %}" id="flecha" class="link wobble-vertical-on-hover flecha" alt="flecha"/>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for guardias in object_list %}
+        <tr>
+          <td> {{guardias.centroSalud.nombre}} </td>
+          <td> {{guardias.fecha}} </td>
+          <td> <a onClick="return confirm ('¿Confirma la devolución de la guardia en el {{guardias.centroSalud.nombre}} el dia {{guardias.fecha}}, en el horario de {{guardias.turno}} horas?');
+            "href="{% url 'DevolucionGuardias_app:devolver' guardiaId=guardias.id %}">{{guardias.turno}}</a></td>
+        </tr>
+        {% endfor %}     
+      </tbody>
+    </table>
+  </section>
+{% endblock %}
